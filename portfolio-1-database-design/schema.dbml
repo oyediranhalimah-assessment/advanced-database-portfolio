@@ -1,0 +1,62 @@
+Table clients {
+  client_id integer [pk]
+  name varchar
+  phone varchar
+  email varchar
+}
+
+Table events {
+  event_id integer [pk]
+  client_id integer [ref: > clients.client_id]
+  event_type varchar
+  event_date date
+  location varchar
+  budget decimal
+  expected_guests integer
+}
+
+Table venues {
+  venue_id integer [pk]
+  name varchar
+  address varchar
+  capacity integer
+  price decimal
+}
+
+Table vendors {
+  vendor_id integer [pk]
+  name varchar
+  category varchar
+  contact varchar
+}
+
+Table vendor_services {
+  service_id integer [pk]
+  vendor_id integer [ref: > vendors.vendor_id]
+  service_name varchar
+  price decimal
+}
+
+Table venue_bookings {
+  venue_booking_id integer [pk]
+  event_id integer [ref: > events.event_id]
+  venue_id integer [ref: > venues.venue_id]
+  status varchar
+}
+
+Table vendor_bookings {
+  vendor_booking_id integer [pk]
+  event_id integer [ref: > events.event_id]
+  vendor_id integer [ref: > vendors.vendor_id]
+  status varchar
+  sourced_by varchar
+}
+
+Table payments {
+  payment_id integer [pk]
+  event_id integer [ref: > events.event_id]
+  amount decimal
+  payment_date date
+  method varchar
+  receipt_number varchar
+}
