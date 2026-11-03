@@ -31,3 +31,29 @@ ROLLBACK;
 --
 
 SELECT * FROM venue_booking;
+
+--isolation (two separate tabs)
+-- Tab A:
+BEGIN;
+UPDATE venues SET price = price + 50000 WHERE venue_id = 1;
+SELECT venue_id, name, price FROM venues WHERE venue_id = 1;
+
+-- Tab B (run while Tab A is still open): shows the OLD price
+SELECT venue_id, name, price FROM venues WHERE venue_id = 1;
+
+
+--
+BEGIN;
+
+UPDATE venues SET price = price + 50000 WHERE venue_id = 1;
+
+-- in tab B
+
+UPDATE venues SET price = price + 10000 WHERE venue_id = 1;
+
+-- in tab A
+
+
+SELECT venue_id, name, price FROM venues WHERE venue_id = 1;
+
+UPDATE venues SET price = price - 60000 WHERE venue_id = 1;
