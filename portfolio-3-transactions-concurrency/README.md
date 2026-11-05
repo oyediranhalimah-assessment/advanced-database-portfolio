@@ -1,1 +1,6 @@
 Portfolio 3: Transactions and concurrency for an event planning business
+A transaction is a group of database operations treated as one complete unit. In my demos, COMMIT saved the changes permanently, while ROLLBACK cancelled the changes and returned the database to its previous state.
+In the failed payment demo, the booking was undone because the payment broke a database rule. This ensured that we did not end up with a booking recorded without a valid payment or a half-completed transaction.
+Isolation means that transactions do not interfere with each other while they are still in progress. In my demo, Tab B could not see Tab A's uncommitted changes, so it continued seeing the last committed version until Tab A committed.
+Locking prevented Tab B from changing a record while Tab A was already updating it. Tab B's update had to wait until Tab A finished. Without locking, both staff members could update the same record, and one person's changes could overwrite the other's. This is known as a lost update.
+In KnH, two staff members might try to change the price of the same venue at the same time. Transactions keep a booking and its payment consistent, and isolation and locking stop two staff overwriting each other’s price changes. 
